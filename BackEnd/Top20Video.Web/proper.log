@@ -1,0 +1,10 @@
+2019-01-20 19:10:46,218 [45] INFO  Top20Video.YouTubeAPI.Helper.SyncSettings =============== Sync already done. ==========
+2019-01-21 17:30:34,639 [18] INFO  Top20Video.YouTubeAPI.Helper.SyncSettings =============== video sync is in process ==========
+2019-01-21 17:30:34,642 [18] INFO  Top20Video.YouTubeAPI.Helper.SyncSettings =============== videos have been synced ==========
+2019-01-21 17:30:34,644 [18] INFO  Top20Video.YouTubeAPI.Helper.SyncSettings =============== trendings have been synced ==========
+2019-01-21 17:30:34,645 [18] INFO  Top20Video.YouTubeAPI.Helper.SyncSettings =============== videos have been updated ==========
+2019-01-21 17:40:02,180 [42] INFO  Top20Video.YouTubeAPI.Helper.SyncSettings =============== Sync already done. ==========
+2019-01-21 17:49:54,330 [38] INFO  Top20Video.YouTubeAPI.Helper.SyncSettings =============== video sync is in process ==========
+2019-01-21 17:49:54,335 [38] INFO  Top20Video.YouTubeAPI.Helper.SyncSettings =============== videos have been synced ==========
+2019-01-21 17:49:54,337 [38] INFO  Top20Video.YouTubeAPI.Helper.SyncSettings =============== trendings have been synced ==========
+2019-01-21 17:49:54,339 [38] INFO  Top20Video.YouTubeAPI.Helper.SyncSettings =============== videos have been updated ==========

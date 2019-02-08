@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="@Url.Content("~/Content/site.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/Content/bootstrap.css")" />
+    @*@Styles.Render("~/Content/css")*@
+    <link href="~/Content/css/headerstyle.css" rel="stylesheet">
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script src="~/Scripts/jquery.form.js"></script>
+    <link href="~/Content/themes/base/jquery.ui.all.css" rel="stylesheet" />
+    <link href="~/Content/css/font-awesome.css" rel="stylesheet" />
+
+</head>
+<body>
+    <section class="navigation">
+        <div class="container header">
+            <div class="row header_block">
+                <div class="col-xs-12">
+                    <nav class="navbar navbar-default header_navigation">
+                        <div class="containerMobile">
+                            <div class="navbar-header">
+                                <button aria-expanded="false" class="navbar-toggle collapsed"
+                                        data-target="#bs-example-navbar-collapse-1" data-toggle="collapse"
+                                        type="button">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span> <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button> <a class="navbar-brand adminlogo logoadjustment" >
+                                    @*<img src="~/Content/images/logo-admin.png">*@
+                                              Top 20 Video
+                                </a>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </div> 
+        </div>
+    </section>
+    <section class="bg-image">
+        @RenderBody()
+    </section>
+
+    <!-- Ajax Process Start -->
+    <div class="wait-pupup">
+        <div class="wait-process">
+            <img src="@Url.Content("~/Content/images/ajax-loader.gif")" alt="Please wait..." />
+        </div>
+    </div>
+    <!-- Ajax Process End -->
+    <!-- Ajax Process End -->
+    <script type="text/javascript">
+
+
+        function preventBack() { window.history.forward(); }
+        setTimeout("preventBack()", 0);
+        window.onunload = function () { null };
+
+        $(document).ajaxComplete(function (event, request, settings) {
+            $('.wait-pupup').hide();
+        });
+        $(document).ajaxSend(function (event, request, settings) {
+            $('.wait-pupup').show();
+
+        });
+        $(document).ajaxStart(function () {
+            $('.wait-pupup').show();
+        });
+
+        $('body').on('click', '.alert .close', function (e) {
+            $('.alert').slideUp();
+        });
+
+        $('body').on('keypress', '.number', function (e) {
+            if (e.which != 8 && e.which != 0 && e.which != 46 && (e.which < 48 || e.which > 57)) {
+                return false;
+            }
+            else
+                return true;
+        });
+        function redirect(toUrl) {
+            window.location = toUrl;
+        }
+    </script>
+
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+
+</body>
+
+</html>

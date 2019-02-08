@@ -1,0 +1,331 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:cv="clr-namespace:Xamarin.Forms;assembly=Xamarin.Forms.CarouselView"
+             xmlns:design="clr-namespace:Top20Videos;assembly=Top20Videos"
+             xmlns:CustomListview="clr-namespace:Top20Videos.Helpers"
+             x:Class="Top20Videos.Pages.CategoryList"
+             x:Name="CategoryList"
+            Title ="Top20Videos"
+             BackgroundImage="mainBG.png">
+    <Grid ColumnSpacing="0" RowSpacing="0" Margin="0,0,-12,0">
+        <Grid ColumnSpacing="0" RowSpacing="0" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="1"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="1"/>
+                <RowDefinition Height="1"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <!--Header Start-->
+            <Grid x:Name="HeaderStackLayout" HorizontalOptions="FillAndExpand" Grid.Column="0" Grid.ColumnSpan="6" Padding="10,7,0,0" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackLayout x:Name="ContentStackLayout" HorizontalOptions ="Start"  VerticalOptions="Start" Grid.Column="0" >
+                    <ContentView x:Name="contentView" HorizontalOptions ="Start" VerticalOptions="Start"  
+                 ControlTemplate="{StaticResource MainPageTemplate}"></ContentView>
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="contentView_OnTapped" NumberOfTapsRequired="1"  />
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+                <StackLayout x:Name="StackLayoutLanguageHeader" Orientation="Horizontal" Padding="0,12,24,0" HorizontalOptions="End" Grid.Column="1"  >
+                    <Image x:Name="Fbicon" Source="facebook_logo.png" Margin="0,0,30,0" IsVisible="True"  HorizontalOptions="Start">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="Fbicon_OnTapped" NumberOfTapsRequired="1"  />
+                        </Image.GestureRecognizers>
+                    </Image>
+                    <Image x:Name="LanguageIcon" Source="LanguageIcon"  HorizontalOptions="End"  >
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="LanguageIcon_OnTapped" NumberOfTapsRequired="1"  />
+                        </Image.GestureRecognizers>
+                    </Image>
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="StackLayoutLanguageHeader_OnTapped" NumberOfTapsRequired="1"  />
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+            </Grid>
+            <BoxView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="6" VerticalOptions="Start" HeightRequest="0.5" Color="#5b5d68" Margin="0,-0.5,0,-1">
+            </BoxView>
+            <ScrollView x:Name="scrollBar" Orientation="Horizontal" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="6" Margin="0,0,12,0">
+                <StackLayout Orientation="Vertical" VerticalOptions="End" Margin="0,0,0,-1" >
+                    <StackLayout x:Name="head" Orientation="Horizontal" VerticalOptions="End">
+                        <StackLayout Orientation="Vertical" >
+                            <StackLayout.Margin>
+                                <OnPlatform x:TypeArguments="Thickness" Android="12,0,10,0" iOS="7,0,5,0"/>
+                            </StackLayout.Margin>
+                            <Label x:Name="all" HorizontalOptions="CenterAndExpand" FontSize="13" TextColor="#FFFFFF" Text="ALL" VerticalOptions="Center" Margin="10,0,10,0"  FontFamily="HelveticaNeue-CondensedBold" >
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="ALL_OnTapped" NumberOfTapsRequired="1" />
+                                </Label.GestureRecognizers>
+                            </Label>
+                            <BoxView x:Name="FirstBox" HeightRequest="2" Color="#F50000" />
+                        </StackLayout>
+                        <StackLayout Orientation="Vertical">
+                            <StackLayout.Margin>
+                                <OnPlatform x:TypeArguments="Thickness" Android="10,0,10,0" iOS="5,0,5,0"/>
+                            </StackLayout.Margin>
+                            <Label x:Name="tab24" HorizontalOptions="CenterAndExpand" FontSize="13" Text="24H" TextColor="#FFFFFF" VerticalOptions="Center" Margin="10,0,10,0" FontFamily="HelveticaNeue-CondensedBold" >
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="tab24_OnTapped" NumberOfTapsRequired="1" />
+                                </Label.GestureRecognizers>
+                            </Label>
+                            <BoxView x:Name="secondBox" HeightRequest="2"  />
+                        </StackLayout>
+                        <StackLayout Orientation="Vertical">
+                            <StackLayout.Margin>
+                                <OnPlatform x:TypeArguments="Thickness" Android="10,0,10,0" iOS="5,0,5,0"/>
+                            </StackLayout.Margin>
+                            <Label x:Name="music" HorizontalOptions="CenterAndExpand" FontSize="13" Text="MUSIC" TextColor="#FFFFFF" VerticalOptions="Center" Margin="10,0,10,0" FontFamily="HelveticaNeue-CondensedBold">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="MUSIC_OnTapped" NumberOfTapsRequired="1" />
+                                </Label.GestureRecognizers>
+                            </Label>
+                            <BoxView x:Name="thirdBox" HeightRequest="2"  />
+                        </StackLayout>
+                        <StackLayout Orientation="Vertical">
+                            <StackLayout.Margin>
+                                <OnPlatform x:TypeArguments="Thickness" Android="10,0,10,0" iOS="5,0,5,0"/>
+                            </StackLayout.Margin>
+                            <Label x:Name="comedy" HorizontalOptions="CenterAndExpand" FontSize="13" Text="COMEDY" TextColor="#FFFFFF" VerticalOptions="Center" Margin="10,0,10,0" FontFamily="HelveticaNeue-CondensedBold" >
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer
+                      Tapped="NEWS_OnTapped"
+                      NumberOfTapsRequired="1" />
+                                </Label.GestureRecognizers>
+                            </Label>
+                            <BoxView x:Name="FourthBox" HeightRequest="2"  />
+                        </StackLayout>
+                        <StackLayout Orientation="Vertical"  >
+                            <StackLayout.Margin>
+                                <OnPlatform x:TypeArguments="Thickness" Android="10,0,10,0" iOS="5,0,5,0"/>
+                            </StackLayout.Margin>
+                            <Label x:Name="sports" HorizontalOptions="CenterAndExpand" FontSize="13" Text="SPORTS" TextColor="#FFFFFF" VerticalOptions="Center" Margin="10,0,10,0" FontFamily="HelveticaNeue-CondensedBold" >
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="SPORTS_OnTapped" NumberOfTapsRequired="1" />
+                                </Label.GestureRecognizers>
+                            </Label>
+                            <BoxView x:Name="FifthBox" HeightRequest="2"  />
+                        </StackLayout>
+                        <StackLayout Orientation="Vertical">
+                            <StackLayout.Margin>
+                                <OnPlatform x:TypeArguments="Thickness" Android="10,0,10,0" iOS="5,0,5,0"/>
+                            </StackLayout.Margin>
+                            <Label x:Name="gaming" HorizontalOptions="CenterAndExpand" FontSize="13" Text="GAMING  " TextColor="#FFFFFF" VerticalOptions="Center" Margin="10,0,2,0"  FontFamily="HelveticaNeue-CondensedBold">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer
+                  Tapped="GAMING_OnTapped"
+                      NumberOfTapsRequired="1" />
+                                </Label.GestureRecognizers>
+                            </Label>
+                            <BoxView x:Name="sixthBox" HeightRequest="2"  />
+                        </StackLayout>
+                    </StackLayout>
+                </StackLayout>
+            </ScrollView>
+
+            <!--Header End-->
+
+            <!--List Content Start-->
+            <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="6" VerticalOptions="FillAndExpand">
+                <StackLayout x:Name="setMargin" Margin="0,15,0,0">
+                    <cv:CarouselView x:Name="Carousel" ItemsSource="{Binding Path=BindingContext, Source={x:Reference CategoryList}, Mode=TwoWay}" PositionSelected="Carousel_Change">
+                        <cv:CarouselView.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout>
+                                    <StackLayout.Padding>
+                                        <OnPlatform
+                                            x:TypeArguments="Thickness"
+                                            iOS="10, 0, 10, 0"
+                                            Android="10, 0, 10, 0"/>
+                                    </StackLayout.Padding>
+                                    <ListView x:Name="lstItm" ItemsSource="{Binding CategoryVideolist}" ItemSelected="SelectedItem"  ItemDisappearing="ItemDisappearing" HorizontalOptions="FillAndExpand"  SeparatorVisibility="Default" BindingContextChanged="lstItm_BindingContextChanged"
+                                              BackgroundColor="Transparent" ItemTapped="lstItm_ItemTapped" >
+                                        <!--CachingStrategy="RecycleElement"-->
+                                        <ListView.RowHeight>
+                                            <OnPlatform x:TypeArguments="x:Int32" iOS="75" Android="82" />
+                                        </ListView.RowHeight>
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate x:Name="templateMain">
+                                                <ViewCell>
+                                                    <ViewCell.View>
+                                                        <StackLayout Orientation="Horizontal" BackgroundColor="{Binding BackgroundColor}">
+                                                            <StackLayout.Margin>
+                                                                <!--<OnPlatform x:TypeArguments="Thickness" iOS="1,1,10,-2" Android="1,1,1,5"/>-->
+                                                                <OnPlatform x:TypeArguments="Thickness" iOS="1,1,1,-2" Android="1,1,1,1"/>
+                                                            </StackLayout.Margin>
+                                                            <Grid>
+                                                                <Grid.RowDefinitions>
+                                                                    <RowDefinition Height="*"/>
+                                                                </Grid.RowDefinitions>
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="110"/>
+                                                                    <ColumnDefinition Width="*"/>
+                                                                </Grid.ColumnDefinitions>
+                                                                <StackLayout Grid.Row="0" Grid.Column="0" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                                                                    <StackLayout.Margin>
+                                                                        <OnPlatform x:TypeArguments="Thickness" iOS="1,-6,0,0" Android="1,0,-1,0"/>
+                                                                    </StackLayout.Margin>
+                                                                    <Grid>
+                                                                        <Image Source="{Binding Thumbnail}" Aspect="AspectFill" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand">
+                                                                            <Image.HeightRequest>
+                                                                                <OnPlatform x:TypeArguments="x:Double" Android="78" iOS="70" />
+                                                                            </Image.HeightRequest>
+                                                                            <Image.WidthRequest>
+                                                                                <OnPlatform x:TypeArguments="x:Double" Android="105" iOS="105"/>
+                                                                            </Image.WidthRequest>
+                                                                        </Image>
+                                                                        <StackLayout HorizontalOptions="End" VerticalOptions="End" BackgroundColor="#A6000000" Margin="0,0,5,5">
+                                                                            <Label Text="{Binding Duration}" TextColor="#EFEEEE" Margin="7,3,7,3" FontSize="10"  FontFamily="Helvetica-Condensed-Thin" />
+                                                                        </StackLayout>
+                                                                    </Grid>
+                                                                </StackLayout>
+                                                                <StackLayout Grid.Row="0" Grid.Column="1"  HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand">
+                                                                    <StackLayout.Padding>
+                                                                        <OnPlatform x:TypeArguments="Thickness" Android="5,0,0,1" iOS="5,0,0,5"/>
+                                                                    </StackLayout.Padding>
+                                                                    <Label Text="{Binding Title}" TextColor="#FDFEFE" FontSize="13.5" LineBreakMode="WordWrap" Margin="0,0,5,0" FontFamily="Helvetica-Condensed-Thin" />
+                                                                    <Label Text="{Binding Channel}" HorizontalOptions="Start" TextColor="#B2B2B2" FontSize="12.5" Margin="0,0,3,0"  FontFamily="Helvetica-Condensed-Thin" />
+                                                                    <Label Text="{Binding PublishAgo}" HorizontalOptions="StartAndExpand" TextColor="#B2B2B2"  FontSize="12.5" Margin="0,-3,0,0" FontFamily="Helvetica-Condensed-Thin"  />
+                                                                </StackLayout>
+                                                            </Grid>
+                                                        </StackLayout>
+                                                    </ViewCell.View>
+                                                </ViewCell>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+                                </StackLayout>
+                            </DataTemplate>
+                        </cv:CarouselView.ItemTemplate>
+                    </cv:CarouselView>
+                    <ActivityIndicator x:Name="ListLoadIndicator" Color="Red" IsRunning="False" HorizontalOptions="Center" VerticalOptions="StartAndExpand" BackgroundColor="Transparent" Margin="0,-100,0,0" />
+                </StackLayout>
+
+                <StackLayout x:Name="wbVid"  HorizontalOptions="Start" VerticalOptions="Start">
+                    <Grid>
+                        <WebView Navigated="viewPlayer_Navigated" Navigating="viewPlayer_Navigating"  x:Name="viewPlayer" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"></WebView>
+                    </Grid>
+                </StackLayout>
+            </Grid>
+            <!--List Content End-->
+
+            <BoxView x:Name="boxBottomLine" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="6" VerticalOptions="Start" HeightRequest="1" Color="#805b5d68" Margin="0,-50,0,0">
+            </BoxView>
+            <!--Footer Start-->
+            <StackLayout x:Name="pnlPlayerControl" BackgroundColor="#28292C" Grid.Row="5" Grid.ColumnSpan="6" Orientation="Horizontal" Padding="10,5,10,5" Margin="0,-50,0,0">
+                <Image x:Name="pre" Source="previous_disable.png" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" >
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer
+               Tapped="previous_OnTapped"
+                NumberOfTapsRequired="1" />
+                    </Image.GestureRecognizers>
+                </Image>
+                <Image  x:Name="ply" Source="play_bottom.png" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" >
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer
+               Tapped="play_OnTapped"
+                NumberOfTapsRequired="1" />
+                    </Image.GestureRecognizers>
+                </Image>
+                <Image x:Name="next" Source="next_bottom.png" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" >
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer
+               Tapped="next_OnTapped"
+                NumberOfTapsRequired="1" />
+                    </Image.GestureRecognizers>
+                </Image>
+                <Image Source="star_bottom.png" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" >
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer
+               Tapped="star_bottom_OnTapped"
+                NumberOfTapsRequired="1" />
+                    </Image.GestureRecognizers>
+                </Image>
+                <Image Source="reply_bottom.png" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" >
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer
+               Tapped="reply_bottom_OnTapped"
+                NumberOfTapsRequired="1" />
+                    </Image.GestureRecognizers>
+                </Image>
+                <StackLayout Orientation="Horizontal" >
+                    <StackLayout.Padding>
+                        <OnPlatform x:TypeArguments="Thickness" iOS="3,0,3,3" Android="0,0,0,0"/>
+                    </StackLayout.Padding>
+                    <!--<Picker x:Name="regionList" IsVisible="False" TextColor="#FFFFFF" SelectedIndexChanged="RegionList_Change">
+                        <Picker.WidthRequest>
+                            <OnPlatform x:TypeArguments="x:Double" Android="35" iOS="42" />
+                        </Picker.WidthRequest>
+                        <Picker.Margin>
+                            <OnPlatform x:TypeArguments="Thickness" Android="10,0,3,0" iOS="10,0,3,0" />
+                        </Picker.Margin>
+                        <Picker.Items Title="SE">
+                        </Picker.Items>
+                    </Picker>
+                    <Image x:Name="imgRegionBtn" Source="arow.png" IsVisible="False"  HeightRequest="7" WidthRequest="8">
+                        <Picker.Margin>
+                            <OnPlatform x:TypeArguments="Thickness" Android="-19,0,20,0" iOS="-23,0,20,0" />
+                        </Picker.Margin>
+                    </Image>-->
+                    
+                    <Image x:Name="ytplayBtn" Source="ytplay.png" VerticalOptions="Center"  >
+                        <!--<Image.WidthRequest>
+                            <OnPlatform x:TypeArguments="x:Double" Android="25" iOS="32" />
+                        </Image.WidthRequest>-->
+                        <Image.Margin>
+                            <OnPlatform x:TypeArguments="Thickness" Android="10,0,12,5" iOS="10,0,10,0" />
+                        </Image.Margin>
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer
+               Tapped="ytplayBtn_OnTapped"
+                NumberOfTapsRequired="1" />
+                        </Image.GestureRecognizers>
+                    </Image>
+                </StackLayout>
+            </StackLayout>
+            <!--Footer End-->
+        </Grid>
+
+        <Grid x:Name="LanguageGridView"      IsVisible="False" >
+            <BoxView x:Name="LSTBox" IsVisible="True"  HorizontalOptions="EndAndExpand"  VerticalOptions="StartAndExpand" Color="#805b5d68"/>
+
+            <CustomListview:CustomListview  x:Name="LanguageListview"  SeparatorVisibility="None" IsVisible="True" HorizontalOptions="EndAndExpand"  VerticalOptions="StartAndExpand"   ItemTapped="LanguageListview_ItemTapped"  BackgroundColor="#28292D" >
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+
+                            <StackLayout x:Name="ListviewStackLayout" Orientation="Vertical" >
+                                <Label x:Name="LangLable"  Text="{Binding Name}" Margin="0,13,0,0" TextColor="{Binding TextColor}"   HorizontalOptions="CenterAndExpand" VerticalOptions="Center" FontSize="13" FontFamily="HelveticaNeue-CondensedBold">
+
+                                    <!--<Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnLanguageLabelClicked"/>
+                                </Label.GestureRecognizers>-->
+                                </Label>
+                                <BoxView x:Name="LBox"  Color="{Binding isSelected}"  HeightRequest="2" Margin="25,-3,25,0"/>
+
+                            </StackLayout>
+
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+            </CustomListview:CustomListview>
+
+        </Grid>
+        
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer Tapped="StackLayoutLanguageHeader_OnTapped" NumberOfTapsRequired="1"  />
+        </Grid.GestureRecognizers>
+    </Grid>
+</ContentPage>

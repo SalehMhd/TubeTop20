@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Message>
+  <Login>
+    <ErrorMessage>Invalid email or password</ErrorMessage>
+    <InvalidRequest>Invalid Request</InvalidRequest>
+  </Login>
+
+  <ChangePassword>
+    <OldAndNewSame>New password can not be current password</OldAndNewSame>
+    <WrongPassword>Invalid current password</WrongPassword>
+    <NotMatch>New password and confirm password must be same</NotMatch>
+    <ErrorMessage>Password could not be updated</ErrorMessage>
+    <SuccessMessage>Password has been changed successfully</SuccessMessage>
+  </ChangePassword>
+
+  <ForgotPassword>
+    <ErrorMessage>Email id does not exists</ErrorMessage>
+    <SuccessMessage>Password has been sent to your email</SuccessMessage>
+  </ForgotPassword>
+
+  <User>
+    <Update>Changes has been saved successfully</Update>
+    <Save>User have been saved successfully</Save>
+  </User>
+
+
+  <Dashboard>
+    <InvalidRequest>Invalid Request</InvalidRequest>
+  </Dashboard>
+
+  <Settings>
+    <Save>Settings has been saved successfully</Save>
+    <Update>Settings has been updated successfully</Update>
+    <Duplicate>Settings already exists</Duplicate>
+    <InvalidRequest>Invalid Request</InvalidRequest>
+    <ErrorMessage>Please provide valid data</ErrorMessage>
+    <Delete>Settings has been deleted successfully</Delete>
+    <TriggerGroup> Random move of individuals has been triggered successfully</TriggerGroup>
+    <DeleteAll>All records have been deleted successfully</DeleteAll>
+  </Settings>
+
+</Message>

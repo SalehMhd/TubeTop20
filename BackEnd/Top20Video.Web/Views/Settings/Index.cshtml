@@ -1,0 +1,140 @@
+﻿@model Top20Video.Models.SettingModel
+@{
+    ViewBag.Title = "Setting";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-2">&nbsp;</div>
+    <div class="col-md-8">
+        <div class="registration_wrap">
+            <h2>Settings</h2>
+            <section id="changepasswordForm">
+                <div class="alert alert-error row" style="display: none;">
+                    <button class="close" type="button">
+                        ×
+                    </button>
+                    <ul>
+                        <li><strong id="error-messgae"></strong></li>
+                    </ul>
+                </div>
+                <div class="alert alert-success row" style="display: none;">
+                    <button data-dismiss="alert" class="close" type="button">
+                        ×
+                    </button>
+                    <ul>
+                        <li><strong id="success-messgae"></strong></li>
+                    </ul>
+                </div>
+                <hr />
+                @using (Html.BeginForm())
+                {
+                    @Html.HiddenFor(m => m.ID);
+
+                    @Html.AntiForgeryToken()
+                    @*<div class="form-group ">
+                            @Html.LabelFor(m => m.LastUpdate,"Last Update"): @Model.LastUpdate<br />
+                        </div>*@
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Duration, "Duration (in minutes)")<br />
+                        @Html.TextBoxFor(m => m.Duration, new { @placeholder = "Duration", @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Duration)
+                    </div>
+
+                    <div class="form-group">
+                        @*<input type="submit" value="Save" class="btn btn-default" />*@
+                        <button class="btn" type="button" onclick="doChange()">Submit</button>
+                        <button class="btn btnSync pull-right" type="button" onclick="SyncVideo()">Sync Now</button>
+                    </div>
+                }
+            </section>
+        </div>
+
+    </div>
+</div>
+
+<script type="text/javascript">
+    function fnSuccess(data) {
+        if (data) {
+            alert(data.Message);
+            clear();
+        }
+        bootbox.alert(data.Message);
+    }
+
+    function fnError(data) {
+
+    }
+
+
+    function doChange() {
+        $('.alert-success').slideUp();
+        $('.alert-error').slideUp();
+        if ($('form').valid()) {
+            var data = $('form');
+            $.ajax({
+                cache: false,
+                async: true,
+                url: '@Url.Content("~/Settings/Save")',
+                type: 'POST',
+                data: data.serialize(),
+                dataType: 'json',
+                success: function (data) {
+                    $('#success-messgae').html(data.Message);
+                    $('.alert-success').slideDown().delay(3000).slideUp(500);
+                    //if (data.Status == 0 || data.Status == 2) {
+                    //    $('#success-messgae').html(data.Message);
+                    //    $('.alert-success').slideDown().delay(3000).slideUp(500);
+                    //}
+                    //else {
+                    //    $('#error-messgae').html(data.Message);
+                    //    $('.alert-error').slideDown();
+
+                    //}
+                },
+                error: function (data) {
+                },
+                beforeSend: function () {
+                    $('.wait-pupup').fadeIn();
+                },
+                complete: function () {
+                    $('.wait-pupup').fadeOut();
+
+                }
+
+            });
+        }
+    }
+
+    function SyncVideo() {
+        $('.alert-success').slideUp();
+        $('.alert-error').slideUp();
+        $.ajax({
+            cache: false,
+            async: true,
+            url: '@Url.Content("~/Settings/SyncVideo")',
+            type: 'POST',
+            //data: data.serialize(),
+            dataType: 'json',
+            success: function (data) {
+                if (data.Status == 0) {
+                    $('#success-messgae').html(data.Message);
+                    $('.alert-success').slideDown().delay(3000).slideUp(500);
+                }
+                else {
+                    $('#error-messgae').html(data.Message);
+                    $('.alert-error').slideDown();
+                }
+            },
+            error: function (data) {
+            },
+            beforeSend: function () {
+                $('.wait-pupup').fadeIn();
+            },
+            complete: function () {
+                $('.wait-pupup').fadeOut();
+            }
+        });
+    }
+
+</script>

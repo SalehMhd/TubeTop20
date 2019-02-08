@@ -1,0 +1,111 @@
+﻿@model Top20Video.Models.ChangePasswordModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-2">&nbsp;</div>
+    <div class="col-md-8">
+        <div class="registration_wrap">
+            <h2>Change Password</h2>
+            <section id="changepasswordForm">
+                <div class="alert alert-error row" style="display: none;">
+                    <button class="close" type="button">
+                        ×
+                    </button>
+                    <ul>
+                        <li><strong id="error-messgae"></strong></li>
+                    </ul>
+                </div>
+                <div class="alert alert-success row" style="display: none;">
+                    <button data-dismiss="alert" class="close" type="button">
+                        ×
+                    </button>
+                    <ul>
+                        <li><strong id="success-messgae"></strong></li>
+                    </ul>
+                </div>
+                <hr />
+                @using (Html.BeginForm())
+                {
+                    <div class="form-group">
+                        @Html.TextBoxFor(m => m.CurrentPassword, new { @placeholder = "Current Password", @class = "form-control", type = "password" })
+                        @Html.ValidationMessageFor(m => m.CurrentPassword)
+                    </div>
+                    <div class="form-group">
+                        @Html.TextBoxFor(m => m.NewPassword, new { @placeholder = "New Password", @class = "form-control", type = "password" })
+                        @Html.ValidationMessageFor(m => m.NewPassword)
+
+                    </div> <div class="form-group">
+                        @Html.TextBoxFor(m => m.ConfirmPassword, new { @placeholder = "Confirm Password", @class = "form-control", type = "password" })
+                        @Html.ValidationMessageFor(m => m.ConfirmPassword)
+
+                    </div>
+                    <div class="checkbox">
+                        <div class="btn_area">
+                            <button class="btn" type="button" onclick="doChange()">Submit</button>
+                        </div>
+                    </div>
+                }
+            </section>
+        </div>
+    </div>
+</div>
+@*@section script{*@
+<script type="text/javascript">
+    function fnSuccess(data) {
+        if (data) {
+            alert(data.Message);
+            clear();
+        }
+        bootbox.alert(data.Message);
+    }
+
+    function fnError(data) {
+
+    }
+
+    function clear() {
+        $('#CurrentPassword').val('');
+        $('#NewPassword').val('');
+        $('#ConfirmPassword').val('');
+    }
+
+    function doChange() {
+        $('.alert-success').slideUp();
+        $('.alert-error').slideUp();
+        if ($('form').valid()) {
+            var data = $('form');
+            $.ajax({
+                cache: false,
+                async: true,
+                url: '@Url.Content("~/ChangePassword/ChangePassword")',
+                type: 'POST',
+                data: data.serialize(),
+                dataType: 'json',
+                success: function (data) {
+                    if (data.Status == 0) {
+                        $('#success-messgae').html(data.Message);
+                        $('.alert-success').slideDown();
+                        $('.alert-success').slideUp(2000);
+                        clear();
+                    }
+                    else {
+                        $('#error-messgae').html(data.Message);
+                        $('.alert-error').slideDown();
+                    }
+                },
+                error: function (data) {
+                },
+                beforeSend: function () {
+                    $('.wait-pupup').fadeIn();
+                },
+                complete: function () {
+                    $('.wait-pupup').fadeOut();
+                }
+            });
+        }
+    }
+</script>
+
