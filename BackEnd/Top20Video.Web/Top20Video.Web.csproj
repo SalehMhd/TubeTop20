@@ -210,7 +210,9 @@
   <ItemGroup>
     <Compile Include="Api\BaseApiController.cs" />
     <Compile Include="Api\LanguageController.cs" />
+    <Compile Include="Api\RegionRecentController.cs" />
     <Compile Include="Api\TrendingController.cs" />
+    <Compile Include="Api\TrendingRecentController.cs" />
     <Compile Include="Api\VideoController.cs" />
     <Compile Include="Api\RegionController.cs" />
     <Compile Include="Api\CategoryController.cs" />
@@ -466,6 +468,8 @@
     <Folder Include="App_Data\" />
     <Folder Include="AutoService\" />
     <Folder Include="Content\images\CompanyUser\" />
+    <Folder Include="Views\RegionRecent\" />
+    <Folder Include="Views\TrendingRecent\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

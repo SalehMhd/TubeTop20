@@ -322,6 +322,46 @@ namespace Top20Video.Repository
 
             return model;
         }
+
+        public IEnumerable<VideoModel> GetVideos(int categoryId, string regionCode)
+        {
+            List<VideoModel> model = new List<VideoModel>();
+            var listTopCategorical = _unitOfWork
+                .RepoVideo
+                .Where(x => !(x.IsDeleted ?? false) && (x.CategoryId == categoryId) && (x.CountryCode == regionCode))
+                .ToList()
+                .Where(x => x.PublishedAt.HasValue ? DateTime.Now.AddHours(-24) < x.PublishedAt.Value : x.PublishedAt.HasValue)
+                .DistinctBy(x => x.YtId)
+                .OrderByDescending(x => x.ViewsCount)
+                .Take(20);
+            foreach (var x in listTopCategorical)
+            {
+                model.Add(new VideoModel
+                {
+                    ID = x.Id,
+                    CategoryId = x.CategoryId.HasValue ? x.CategoryId.Value : 6,
+                    CategoryName = x.Category.Name,
+                    YTCategoryId = 0,
+                    Channel = x.Channel ?? "",
+                    Description = "" ?? "",
+                    //Description = x.Description ?? "",
+                    Duration = x.Duration ?? "",
+                    PublishedAt = x.PublishedAt ?? new DateTime(),
+                    RegionCode = regionCode,
+                    Thumbnail = x.ThumbImageUrl ?? "",
+                    Title = x.Title ?? "",
+                    VideoUrl = x.VideoUrl ?? "",
+                    YouTubeId = x.YtId ?? "",
+                    ViewCount = x.ViewsCount ?? 0,
+                    CategoryDisplayOrder = x.Category.DisplayOrder ?? 0,
+                    RelevanceLanguage = x.RelevanceLanguage ?? "",
+                });
+            }
+            model.ForEach(x => x.PublishAgo = x.PublishedAt.ToTimeDisplay());
+            model.ForEach(x => x.ViewDisplay = x.ViewCount.ToViewsCount());
+
+            return model;
+        }
     }
 }
 

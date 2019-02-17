@@ -42,6 +42,6 @@ namespace Top20Video.Repository
         /// <param name="regionCode"></param>
         void UnMarkDeleted(string regionCode);
 
-
+        IEnumerable<VideoModel> GetVideos(int categoryId, string regionCode);
     }
 }
