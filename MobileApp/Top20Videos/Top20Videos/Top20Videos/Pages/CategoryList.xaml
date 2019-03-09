@@ -75,23 +75,12 @@
                             <StackLayout.Margin>
                                 <OnPlatform x:TypeArguments="Thickness" Android="10,0,10,0" iOS="5,0,5,0"/>
                             </StackLayout.Margin>
-                            <Label x:Name="tab24" HorizontalOptions="CenterAndExpand" FontSize="13" Text="24H" TextColor="#FFFFFF" VerticalOptions="Center" Margin="10,0,10,0" FontFamily="HelveticaNeue-CondensedBold" >
-                                <Label.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="tab24_OnTapped" NumberOfTapsRequired="1" />
-                                </Label.GestureRecognizers>
-                            </Label>
-                            <BoxView x:Name="secondBox" HeightRequest="2"  />
-                        </StackLayout>
-                        <StackLayout Orientation="Vertical">
-                            <StackLayout.Margin>
-                                <OnPlatform x:TypeArguments="Thickness" Android="10,0,10,0" iOS="5,0,5,0"/>
-                            </StackLayout.Margin>
                             <Label x:Name="music" HorizontalOptions="CenterAndExpand" FontSize="13" Text="MUSIC" TextColor="#FFFFFF" VerticalOptions="Center" Margin="10,0,10,0" FontFamily="HelveticaNeue-CondensedBold">
                                 <Label.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="MUSIC_OnTapped" NumberOfTapsRequired="1" />
                                 </Label.GestureRecognizers>
                             </Label>
-                            <BoxView x:Name="thirdBox" HeightRequest="2"  />
+                            <BoxView x:Name="secondBox" HeightRequest="2"  />
                         </StackLayout>
                         <StackLayout Orientation="Vertical">
                             <StackLayout.Margin>
@@ -104,7 +93,7 @@
                       NumberOfTapsRequired="1" />
                                 </Label.GestureRecognizers>
                             </Label>
-                            <BoxView x:Name="FourthBox" HeightRequest="2"  />
+                            <BoxView x:Name="thirdBox" HeightRequest="2"  />
                         </StackLayout>
                         <StackLayout Orientation="Vertical"  >
                             <StackLayout.Margin>
@@ -115,7 +104,7 @@
                                     <TapGestureRecognizer Tapped="SPORTS_OnTapped" NumberOfTapsRequired="1" />
                                 </Label.GestureRecognizers>
                             </Label>
-                            <BoxView x:Name="FifthBox" HeightRequest="2"  />
+                            <BoxView x:Name="FourthBox" HeightRequest="2"  />
                         </StackLayout>
                         <StackLayout Orientation="Vertical">
                             <StackLayout.Margin>
@@ -128,7 +117,7 @@
                       NumberOfTapsRequired="1" />
                                 </Label.GestureRecognizers>
                             </Label>
-                            <BoxView x:Name="sixthBox" HeightRequest="2"  />
+                            <BoxView x:Name="FifthBox" HeightRequest="2"  />
                         </StackLayout>
                     </StackLayout>
                 </StackLayout>

@@ -56,6 +56,9 @@ namespace Top20Videos.ViewModels
                 {
                     foreach (var item in response.OrderBy(x => x.DisplayOrder).ToList())
                     {
+                        if(item.Name == "tab24")
+                            continue;
+
                         Categories cat = new Categories();
                         cat.CategoryName = item.Name;   
                         List<VideoModel> list = (videoData.Where(x => x.CategoryName == item.Name)).ToList();
@@ -90,7 +93,6 @@ namespace Top20Videos.ViewModels
             Blankdata.Add(new Categories() { CategoryName = "Music", CategoryVideolist = new ObservableCollection<VideoModel>() });
             Blankdata.Add(new Categories() { CategoryName = "Comedy", CategoryVideolist = new ObservableCollection<VideoModel>() });
             Blankdata.Add(new Categories() { CategoryName = "Sports", CategoryVideolist = new ObservableCollection<VideoModel>() });
-            Blankdata.Add(new Categories() { CategoryName = "tab24", CategoryVideolist = new ObservableCollection<VideoModel>() });
             Blankdata.Add(new Categories() { CategoryName = "Gaming", CategoryVideolist = new ObservableCollection<VideoModel>() });
 
             return Blankdata;

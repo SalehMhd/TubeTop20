@@ -230,14 +230,6 @@ namespace Top20Videos.Pages
             if (Carousel.Item != null)
             {
                 currentTab = music.Text.Trim();
-                Carousel.Position = 2;
-            }
-        }
-        private void tab24_OnTapped(object sender, EventArgs es)
-        {
-            if (Carousel.Item != null)
-            {
-                currentTab = tab24.Text.Trim();
                 Carousel.Position = 1;
             }
         }
@@ -246,7 +238,7 @@ namespace Top20Videos.Pages
             if (Carousel.Item != null)
             {
                 currentTab = sports.Text.Trim();
-                Carousel.Position = 4;
+                Carousel.Position = 3;
             }
         }
         private void NEWS_OnTapped(object sender, EventArgs es)
@@ -254,7 +246,7 @@ namespace Top20Videos.Pages
             if (Carousel.Item != null)
             {
                 currentTab = comedy.Text.Trim(); ;
-                Carousel.Position = 3;
+                Carousel.Position = 2;
             }
         }
         private void GAMING_OnTapped(object sender, EventArgs es)
@@ -262,7 +254,7 @@ namespace Top20Videos.Pages
             if (Carousel.Item != null)
             {
                 currentTab = gaming.Text.Trim();
-                Carousel.Position = 5;
+                Carousel.Position = 4;
             }
         }
         #endregion
@@ -829,8 +821,8 @@ namespace Top20Videos.Pages
             //LSTBox.IsVisible = false;
             previousCat = currentTab;
 
-            Label[] arrheaderTab = { all, tab24, music, comedy, sports, gaming };
-            BoxView[] arrIndicator = { FirstBox, secondBox, thirdBox, FourthBox, FifthBox, sixthBox };
+            Label[] arrheaderTab = { all, music, comedy, sports, gaming };
+            BoxView[] arrIndicator = { FirstBox, secondBox, thirdBox, FourthBox, FifthBox };
             for (int i = 0; i < arrheaderTab.Length; i++)
             {
                 if (Carousel.Position == i)

@@ -35,10 +35,10 @@ namespace Top20Videos.Helpers
         //public const string Api_VideoUrl = "http://192.168.1.25:45455/api/video?categoryId={0}&regionCode={1}&LanguageCode={2}";
         //public const string Api_CategoryUrl = "http://192.168.1.25:45455/api/category";
         //public const string Api_Language = "http://192.168.1.25:45455/api/language";
-        public const string Api_VideoUrl = "http://onepushpower.com/api/trending?regionCode={0}";
-        public const string Api_CategoryUrl = "http://onepushpower.com/api/category";
-        public const string Api_RegionUrl = "http://onepushpower.com/api/region";
 
+        public const string Api_VideoUrl = "http://onepushpower.com/api/trendingrecent?regionCode={0}";
+        public const string Api_CategoryUrl = "http://onepushpower.com/api/category";
+        public const string Api_RegionUrl = "http://onepushpower.com/api/regionrecent";
 
         //public const string Api_VideoUrl = "http://www.onepushpower.com/api/video?categoryId={0}&regionCode={1}";
         //public const string Api_CategoryUrl = "http://www.onepushpower.com/api/category";
