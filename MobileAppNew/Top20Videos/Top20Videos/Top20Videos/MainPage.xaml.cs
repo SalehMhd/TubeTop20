@@ -22,6 +22,8 @@ namespace Top20Videos
 
         public double ScreenWidth { get; set; }
 
+        public ObservableCollection<CategoryVideos> CategoriesVideoList;
+
         public MainPage()
         {
             InitializeComponent();
@@ -31,10 +33,24 @@ namespace Top20Videos
             //Show Getting Region Info
 
             VideoList = new ObservableCollection<Video>();
-            RegionsList = new ObservableCollection<Region>();
-            VideosListView.ItemsSource = VideoList;
+            RegionsList = new ObservableCollection<Region>();            
+            //VideosListView.ItemsSource = VideoList;
             RegionsPicker.ItemsSource = RegionsList;
-            VideosListView1.ItemsSource = VideoList;
+            //VideosListView1.ItemsSource = VideoList;
+
+            CategoriesVideoList = new ObservableCollection<CategoryVideos>();
+            carousel.ItemsSource = CategoriesVideoList;
+            CategoriesVideoList.Add(new CategoryVideos());
+            CategoriesVideoList.Add(new CategoryVideos());
+            CategoriesVideoList.Add(new CategoryVideos());
+            CategoriesVideoList.Add(new CategoryVideos());
+            CategoriesVideoList.Add(new CategoryVideos());
+            CategoriesVideoList[0].InnerVideoList = new ObservableCollection<Video>();
+            CategoriesVideoList[1].InnerVideoList = new ObservableCollection<Video>();
+            CategoriesVideoList[2].InnerVideoList = new ObservableCollection<Video>();
+            CategoriesVideoList[3].InnerVideoList = new ObservableCollection<Video>();
+            CategoriesVideoList[4].InnerVideoList = new ObservableCollection<Video>();
+
             Task.Run(async () =>
             {
                 var client = new HttpClient();
@@ -47,21 +63,19 @@ namespace Top20Videos
                     var tempRegionsList =
                         regionSer.ReadObject(new MemoryStream(Encoding.UTF8.GetBytes(regionContentString))) as
                             List<Region>;
-                    foreach (var region in tempRegionsList)
-                    {
-                        RegionsList.Add(region);
-                    }
+                    //foreach (var region in tempRegionsList)
+                    //{
+                    //    RegionsList.Add(region);
+                    //}
 
-                    SelectedRegion = RegionsList[0];
-
+                    //SelectedRegion = RegionsList[0];
                     await LoadVideos();
                 }
                 else
                 {
 
                 }
-            });            
-
+            });
         }
 
         private async Task LoadVideos()
@@ -69,7 +83,7 @@ namespace Top20Videos
             using (var client = new HttpClient())
             {
                 var videoResponse =
-                    await client.GetAsync(string.Format(ApplicationConstant.Api_VideoUrl, SelectedRegion.Code));
+                    await client.GetAsync(string.Format(ApplicationConstant.Api_VideoUrl, "DZ"));// SelectedRegion.Code));
                 if (videoResponse.IsSuccessStatusCode)
                 {
                     var videoContentString = await videoResponse.Content.ReadAsStringAsync();
@@ -81,8 +95,33 @@ namespace Top20Videos
 
                     foreach (var video in tempVideoList)
                     {
-                        VideoList.Add(video);
+                        switch (video.CategoryId)
+                        {
+                            case ApplicationConstant.AllCategryId:
+                                CategoriesVideoList[0].InnerVideoList.Add(video);
+                                break;
+                            case ApplicationConstant.MusicCategryId:
+                                CategoriesVideoList[1].InnerVideoList.Add(video);
+                                break;
+                            case ApplicationConstant.ComedyCategryId:
+                                CategoriesVideoList[2].InnerVideoList.Add(video);
+                                break;
+                            case ApplicationConstant.SportsCategryId:
+                                CategoriesVideoList[3].InnerVideoList.Add(video);
+                                break;
+                            case ApplicationConstant.GamingCategryId:
+                                CategoriesVideoList[4].InnerVideoList.Add(video);
+                                break;
+                        }
+
+                        //VideoList.Add(video);
                     }
+
+                    //foreach (var video in tempVideoList)
+                    //{
+                    //    CategoriesVideoList[1].InnerVideoList.Add(video);
+                    //    //VideoList.Add(video);
+                    //}
                 }
                 Console.WriteLine($"Count is {VideoList.Count}");
             }
@@ -111,6 +150,41 @@ namespace Top20Videos
                     break;
                 case SwipeDirection.Down:
                     Console.WriteLine("Down");
+                    break;
+            }
+        }
+
+        void Handle_PositionSelected(object sender, CarouselView.FormsPlugin.Abstractions.PositionSelectedEventArgs e)
+        {
+            Console.WriteLine("Position " + e.NewValue + " selected.");
+        }
+
+        void Handle_Scrolled(object sender, CarouselView.FormsPlugin.Abstractions.ScrolledEventArgs e)
+        {
+            Console.WriteLine("Scrolled to " + e.NewValue + " percent.");
+            Console.WriteLine("Direction = " + e.Direction);
+        }
+
+        private void CategoryTapGestureRecognizer_OnTapped(object sender, EventArgs e)
+        {
+            var category = ((sender as StackLayout).Children[0] as Label).Text.ToLower();
+
+            switch (category)
+            {
+                case "all":
+                    carousel.Position = 0;
+                    break;
+                case "music":
+                    carousel.Position = 1;
+                    break;
+                case "comedy":
+                    carousel.Position = 2;
+                    break;
+                case "sports":
+                    carousel.Position = 3;
+                    break;
+                case "gaming":
+                    carousel.Position = 4;
                     break;
             }
         }

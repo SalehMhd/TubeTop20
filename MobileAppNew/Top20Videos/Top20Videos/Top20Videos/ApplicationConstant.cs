@@ -43,5 +43,11 @@
         #endregion
 
         public const string YTSourceUrl = "http://www.onepushpower.com/yt.html";
+
+        public const int AllCategryId = 6;
+        public const int MusicCategryId = 1;
+        public const int ComedyCategryId = 7;
+        public const int SportsCategryId = 3;
+        public const int GamingCategryId = 5;
     }
 }

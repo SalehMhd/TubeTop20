@@ -2,6 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:Top20Videos"
+             xmlns:system="clr-namespace:System;assembly=netstandard"
+             xmlns:cv="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions"
              x:Class="Top20Videos.MainPage"
              Title ="Top20Videos"
              BackgroundImage="mainBG.png">
@@ -48,6 +50,9 @@
                 <StackLayout.Margin>
                     <OnPlatform x:TypeArguments="Thickness" Android="10,0,10,0" iOS="5,0,5,0"/>
                 </StackLayout.Margin>
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="CategoryTapGestureRecognizer_OnTapped" NumberOfTapsRequired="1" />
+                </StackLayout.GestureRecognizers>
 
                 <Label 
                     HorizontalOptions="CenterAndExpand" 
@@ -68,6 +73,9 @@
                 <StackLayout.Margin>
                     <OnPlatform x:TypeArguments="Thickness" Android="10,0,10,0" iOS="5,0,5,0"/>
                 </StackLayout.Margin>
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="CategoryTapGestureRecognizer_OnTapped" NumberOfTapsRequired="1" />
+                </StackLayout.GestureRecognizers>
 
                 <Label 
                     HorizontalOptions="CenterAndExpand" 
@@ -88,6 +96,9 @@
                 <StackLayout.Margin>
                     <OnPlatform x:TypeArguments="Thickness" Android="10,0,10,0" iOS="5,0,5,0"/>
                 </StackLayout.Margin>
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="CategoryTapGestureRecognizer_OnTapped" NumberOfTapsRequired="1" />
+                </StackLayout.GestureRecognizers>
 
                 <Label 
                     HorizontalOptions="CenterAndExpand" 
@@ -108,6 +119,9 @@
                 <StackLayout.Margin>
                     <OnPlatform x:TypeArguments="Thickness" Android="10,0,10,0" iOS="5,0,5,0"/>
                 </StackLayout.Margin>
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="CategoryTapGestureRecognizer_OnTapped" NumberOfTapsRequired="1" />
+                </StackLayout.GestureRecognizers>
 
                 <Label 
                     HorizontalOptions="CenterAndExpand" 
@@ -128,6 +142,9 @@
                 <StackLayout.Margin>
                     <OnPlatform x:TypeArguments="Thickness" Android="10,0,10,0" iOS="5,0,5,0"/>
                 </StackLayout.Margin>
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="CategoryTapGestureRecognizer_OnTapped" NumberOfTapsRequired="1" />
+                </StackLayout.GestureRecognizers>
 
                 <Label 
                     HorizontalOptions="CenterAndExpand" 
@@ -148,15 +165,23 @@
             Grid.Row="2"
             Orientation="Vertical"
             BackgroundColor="Gold">
-
-            <ScrollView BackgroundColor="Brown" Orientation="Horizontal" VerticalOptions="StartAndExpand">
-                <FlexLayout BackgroundColor="Blue">
-                    <Frame WidthRequest="{Binding ScreenWidth}"
-                           BackgroundColor="Orange">
-                        <ListView BackgroundColor="Red"
-                            x:Name="VideosListView"
-                                  VerticalOptions="FillAndExpand"
-                              HorizontalOptions="FillAndExpand">
+            
+            <cv:CarouselViewControl x:Name="carousel"
+                                    ShowArrows="false"
+                                    ShowIndicators="false"
+                                    Orientation="Horizontal"
+                                    PositionSelectedCommand="{Binding MyCommand}"
+                                    PositionSelected="Handle_PositionSelected"
+                                    Scrolled="Handle_Scrolled"
+                                    VerticalOptions="FillAndExpand"
+                                    HorizontalOptions="FillAndExpand"
+                                    ItemsSource="{Binding CategoriesVideoList}">
+                        <cv:CarouselViewControl.ItemTemplate>
+                            <DataTemplate>
+                        <ListView BackgroundColor="Green"
+                              VerticalOptions="FillAndExpand"
+                              HorizontalOptions="FillAndExpand"
+                              ItemsSource="{Binding InnerVideoList}">
                             <ListView.RowHeight>
                                 <OnPlatform x:TypeArguments="x:Int32" iOS="75" Android="82" />
                             </ListView.RowHeight>
@@ -188,11 +213,18 @@
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
-                    </Frame>
+                    </DataTemplate>
+                        </cv:CarouselViewControl.ItemTemplate>
+            </cv:CarouselViewControl>
+                
 
-                    <Frame WidthRequest="{Binding ScreenWidth}"
-                           BackgroundColor="Yellow">
-                        <ListView BackgroundColor="Green"
+                        <!--<local:CategoryListView x:Name="CategoryListView"></local:CategoryListView>-->
+
+                        <!--<Label Text="One" TextColor="#FDFEFE" FontSize="13.5" LineBreakMode="WordWrap" FontFamily="Helvetica-Condensed-Thin" />
+                        <Label Text="Two" TextColor="#FDFEFE" FontSize="13.5" LineBreakMode="WordWrap" FontFamily="Helvetica-Condensed-Thin" />
+                        <Label Text="Three" TextColor="#FDFEFE" FontSize="13.5" LineBreakMode="WordWrap" FontFamily="Helvetica-Condensed-Thin" />-->
+
+                        <!--<ListView BackgroundColor="Green"
                         x:Name="VideosListView1"
                               VerticalOptions="FillAndExpand"
                               HorizontalOptions="FillAndExpand">
@@ -226,13 +258,11 @@
                                     </ViewCell>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
-                        </ListView>
-                    </Frame>
-                </FlexLayout>
-            </ScrollView>
-            <!--<WebView x:Name="viewPlayer"
+                        </ListView>-->
+
+            <WebView x:Name="viewPlayer"
                      HorizontalOptions="FillAndExpand"
-                     VerticalOptions="Start"></WebView>-->
+                     VerticalOptions="Start"></WebView>
         </StackLayout>
 
         <StackLayout Grid.Row="3">
