@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.Web;
 using System.Text.RegularExpressions;
 using System.IO;
+using System.Xml;
 
 namespace Top20Video.Framework
 {
@@ -537,35 +538,26 @@ namespace Top20Video.Framework
         /// <returns></returns>
         public static string ToDurationDisplayFormat(this string selectedtime)
         {
-            int h = 0, m = 0, s = 0; string hh = "0", mm = "00", ss = "00";
-
-            string timeformat = selectedtime.Replace("PT", "");
-
-            if (timeformat.Contains('H'))
+            var durationSpan = selectedtime != null
+                ? XmlConvert.ToTimeSpan(selectedtime)
+                : (TimeSpan?)null;
+            if (durationSpan != null)
             {
-                h = timeformat.IndexOf('H');
-                hh = timeformat.Substring(0, h);
+                if (durationSpan.Value.Hours > 0)
+                {
+                    return
+                        $"{Convert.ToInt16(durationSpan.Value.Hours).ToString("00")}:{Convert.ToInt16(durationSpan.Value.Minutes).ToString("00")}:{Convert.ToInt16(durationSpan.Value.Seconds).ToString("00")}";
+                }
+                else
+                {
+                    return
+                        $"{Convert.ToInt16(durationSpan.Value.Minutes).ToString("00")}:{Convert.ToInt16(durationSpan.Value.Seconds).ToString("00")}";
+                }
             }
-            if (timeformat.Contains('M'))
+            else
             {
-                m = timeformat.IndexOf('M');
-                if (h != 0) { mm = timeformat.Substring(h + 1, m - h - 1); }
-                else { mm = timeformat.Substring(h, m - h); }
+                return "0:0";
             }
-            if (timeformat.Contains('S'))
-            {
-                s = timeformat.IndexOf('S');
-                if (m != 0) { ss = timeformat.Substring(m + 1, s - m - 1); }
-                else if (h != 0) { ss = timeformat.Substring(h + 1, s - h - 1); }
-                else { ss = timeformat.Substring(0, s); }
-            }
-
-            //string result = string.Format("{0}:{1}:{2}", hh, mm, ss);
-            string result = string.Format("{0}:{1}", mm, Convert.ToInt16(ss).ToString("00"));
-            if (Convert.ToInt32(hh) > 0)
-                result = string.Format("{0}:{1}:{2}", (hh), Convert.ToInt16(mm).ToString("00"), Convert.ToInt16(ss).ToString("00"));
-
-            return result;
         }
 
     }

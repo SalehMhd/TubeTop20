@@ -35,9 +35,9 @@ namespace Top20Video.AutoService
 
         public static async Task<bool> SyncNow()
         {
-            //await new Top20Video.YouTubeAPI.Helper.VideoHelper().UpdateVideos();
-            //return await new Top20Video.YouTubeAPI.Helper.TrendingHelper().UpdateTrending();
-            return true;
+            await new Top20Video.YouTubeAPI.Helper.VideoHelper().UpdateVideos(); 
+            return await new Top20Video.YouTubeAPI.Helper.TrendingHelper().UpdateTrending();
+            //return true;
         }
     }
 
