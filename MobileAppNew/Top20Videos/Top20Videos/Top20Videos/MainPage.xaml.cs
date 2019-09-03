@@ -188,5 +188,10 @@ namespace Top20Videos
                     break;
             }
         }
+
+        private void Play_OnClicked(object sender, EventArgs e)
+        {
+            MessagingCenter.Send<MainPage, string>(this, "Hi", "IyH7YE0u-ys");
+        }
     }
 }

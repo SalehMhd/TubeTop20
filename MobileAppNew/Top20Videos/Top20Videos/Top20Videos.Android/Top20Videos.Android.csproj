@@ -43,6 +43,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Android" />
+    <Reference Include="Mono.Android.Export" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -59,6 +60,9 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HybridWebViewRenderer.cs" />
+    <Compile Include="JavascriptWebViewClient.cs" />
+    <Compile Include="JSBridge.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -86,7 +90,9 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\icon.png" />
     <AndroidResource Include="Resources\mipmap-xxxhdpi\launcher_foreground.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Content\youtube.html" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Top20Videos\Top20Videos.csproj">
       <Project>{FF49EF7C-A9C2-421D-AC55-99640224C46C}</Project>

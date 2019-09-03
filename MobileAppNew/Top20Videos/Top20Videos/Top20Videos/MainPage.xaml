@@ -260,9 +260,14 @@
                             </ListView.ItemTemplate>
                         </ListView>-->
 
-            <WebView x:Name="viewPlayer"
+            <!--<WebView x:Name="viewPlayer"
                      HorizontalOptions="FillAndExpand"
-                     VerticalOptions="Start"></WebView>
+                     VerticalOptions="Start"></WebView>-->
+            <local:HybridWebView 
+                x:Name="hybridWebView" 
+                Uri="youtube.html" 
+                HorizontalOptions="FillAndExpand" 
+                VerticalOptions="FillAndExpand" />
         </StackLayout>
 
         <StackLayout Grid.Row="3">
@@ -278,7 +283,12 @@
                 </Grid.ColumnDefinitions>
 
                 <Image Grid.Column="0" Source="previous_disable.png"/>
-                <Image Grid.Column="1" Source="play_bottom.png"/>
+                <Image Grid.Column="1" Source="play_bottom.png">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Play_OnClicked"></TapGestureRecognizer>
+                    </Image.GestureRecognizers>
+                </Image>
+
                 <Image Grid.Column="2" Source="previous_disable.png"/>
                 <Image Grid.Column="3" Source="previous_disable.png"/>
                 <Image Grid.Column="4" Source="previous_disable.png"/>
