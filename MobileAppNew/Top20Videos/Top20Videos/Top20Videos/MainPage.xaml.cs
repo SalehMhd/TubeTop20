@@ -36,7 +36,7 @@ namespace Top20Videos
             RegionsList = new ObservableCollection<Region>();
             RegionsPicker.ItemsSource = RegionsList;
             BindingContext = _vm = new MainPageViewModel();
-
+            hybridWebView.RegisterAction(data => DisplayAlert("Alert", "Hello " + data, "OK"));
             //VideosListView.ItemsSource = VideoList;
             //VideosListView1.ItemsSource = VideoList;
 
@@ -207,6 +207,12 @@ namespace Top20Videos
         private void Play_OnClicked(object sender, EventArgs e)
         {
             MessagingCenter.Send<MainPage, string>(this, "Hi", "IyH7YE0u-ys");
+        }
+        
+
+        private void ListView_OnItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            MessagingCenter.Send<MainPage, string>(this, "Hi", (e.SelectedItem as Video).YouTubeId); 
         }
     }
 }

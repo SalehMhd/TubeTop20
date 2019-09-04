@@ -181,7 +181,8 @@
                         <ListView BackgroundColor="Green"
                               VerticalOptions="FillAndExpand"
                               HorizontalOptions="FillAndExpand"
-                              ItemsSource="{Binding InnerVideoList}">
+                              ItemsSource="{Binding InnerVideoList}"
+                              ItemSelected="ListView_OnItemSelected">
                             <ListView.RowHeight>
                                 <OnPlatform x:TypeArguments="x:Int32" iOS="75" Android="82" />
                             </ListView.RowHeight>
