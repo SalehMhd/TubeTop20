@@ -18,11 +18,11 @@ namespace Top20Videos
 
         public ObservableCollection<Video> VideoList { get; set; }
 
+        public MainPageViewModel _vm;
+
         public Region SelectedRegion { get; set; }
 
         public double ScreenWidth { get; set; }
-
-        public ObservableCollection<CategoryVideos> CategoriesVideoList;
 
         public MainPage()
         {
@@ -33,23 +33,14 @@ namespace Top20Videos
             //Show Getting Region Info
 
             VideoList = new ObservableCollection<Video>();
-            RegionsList = new ObservableCollection<Region>();            
-            //VideosListView.ItemsSource = VideoList;
+            RegionsList = new ObservableCollection<Region>();
             RegionsPicker.ItemsSource = RegionsList;
+            BindingContext = _vm = new MainPageViewModel();
+
+            //VideosListView.ItemsSource = VideoList;
             //VideosListView1.ItemsSource = VideoList;
 
-            CategoriesVideoList = new ObservableCollection<CategoryVideos>();
-            carousel.ItemsSource = CategoriesVideoList;
-            CategoriesVideoList.Add(new CategoryVideos());
-            CategoriesVideoList.Add(new CategoryVideos());
-            CategoriesVideoList.Add(new CategoryVideos());
-            CategoriesVideoList.Add(new CategoryVideos());
-            CategoriesVideoList.Add(new CategoryVideos());
-            CategoriesVideoList[0].InnerVideoList = new ObservableCollection<Video>();
-            CategoriesVideoList[1].InnerVideoList = new ObservableCollection<Video>();
-            CategoriesVideoList[2].InnerVideoList = new ObservableCollection<Video>();
-            CategoriesVideoList[3].InnerVideoList = new ObservableCollection<Video>();
-            CategoriesVideoList[4].InnerVideoList = new ObservableCollection<Video>();
+            //carousel.ItemsSource = CategoriesVideoList;
 
             Task.Run(async () =>
             {
@@ -63,12 +54,12 @@ namespace Top20Videos
                     var tempRegionsList =
                         regionSer.ReadObject(new MemoryStream(Encoding.UTF8.GetBytes(regionContentString))) as
                             List<Region>;
-                    //foreach (var region in tempRegionsList)
-                    //{
-                    //    RegionsList.Add(region);
-                    //}
+                    foreach (var region in tempRegionsList)
+                    {
+                        RegionsList.Add(region);
+                    }
 
-                    //SelectedRegion = RegionsList[0];
+                    SelectedRegion = RegionsList[0];
                     await LoadVideos();
                 }
                 else
@@ -80,10 +71,11 @@ namespace Top20Videos
 
         private async Task LoadVideos()
         {
+            Console.WriteLine("LoadVideos FROM: " + SelectedRegion.Name);
             using (var client = new HttpClient())
             {
                 var videoResponse =
-                    await client.GetAsync(string.Format(ApplicationConstant.Api_VideoUrl, "DZ"));// SelectedRegion.Code));
+                    await client.GetAsync(string.Format(ApplicationConstant.Api_VideoUrl, SelectedRegion.Code));
                 if (videoResponse.IsSuccessStatusCode)
                 {
                     var videoContentString = await videoResponse.Content.ReadAsStringAsync();
@@ -93,30 +85,49 @@ namespace Top20Videos
                         videoSer.ReadObject(new MemoryStream(Encoding.UTF8.GetBytes(videoContentString))) as
                             List<Video>;
 
+                    Console.WriteLine("tempVideoListCount: " + tempVideoList.Count);
+
+                    var tempCategoriesVideoList = new ObservableCollection<CategoryVideos>
+                    {
+                        new CategoryVideos(),
+                        new CategoryVideos(),
+                        new CategoryVideos(),
+                        new CategoryVideos(),
+                        new CategoryVideos()
+                    };
+                    tempCategoriesVideoList[0].InnerVideoList = new ObservableCollection<Video>();
+                    tempCategoriesVideoList[1].InnerVideoList = new ObservableCollection<Video>();
+                    tempCategoriesVideoList[2].InnerVideoList = new ObservableCollection<Video>();
+                    tempCategoriesVideoList[3].InnerVideoList = new ObservableCollection<Video>();
+                    tempCategoriesVideoList[4].InnerVideoList = new ObservableCollection<Video>();
+
                     foreach (var video in tempVideoList)
                     {
                         switch (video.CategoryId)
                         {
                             case ApplicationConstant.AllCategryId:
-                                CategoriesVideoList[0].InnerVideoList.Add(video);
+                                tempCategoriesVideoList[0].InnerVideoList.Add(video);
                                 break;
                             case ApplicationConstant.MusicCategryId:
-                                CategoriesVideoList[1].InnerVideoList.Add(video);
+                                tempCategoriesVideoList[1].InnerVideoList.Add(video);
                                 break;
                             case ApplicationConstant.ComedyCategryId:
-                                CategoriesVideoList[2].InnerVideoList.Add(video);
+                                tempCategoriesVideoList[2].InnerVideoList.Add(video);
                                 break;
                             case ApplicationConstant.SportsCategryId:
-                                CategoriesVideoList[3].InnerVideoList.Add(video);
+                                tempCategoriesVideoList[3].InnerVideoList.Add(video);
                                 break;
                             case ApplicationConstant.GamingCategryId:
-                                CategoriesVideoList[4].InnerVideoList.Add(video);
+                                tempCategoriesVideoList[4].InnerVideoList.Add(video);
                                 break;
                         }
 
                         //VideoList.Add(video);
                     }
 
+                    _vm.CategoriesVideoList = tempCategoriesVideoList;
+
+                    //carousel.ItemsSource = CategoriesVideoList;
                     //foreach (var video in tempVideoList)
                     //{
                     //    CategoriesVideoList[1].InnerVideoList.Add(video);
@@ -129,10 +140,14 @@ namespace Top20Videos
 
         private void RegionPicker_OnSelectedIndexChanged(object sender, EventArgs e)
         {
+            Console.WriteLine("RegionPicker_OnSelectedIndexChanged");
+
+            var picker = (Picker)sender;
+            SelectedRegion = picker.SelectedItem as Region;
+
+            Console.WriteLine("SelectedRegion: " + SelectedRegion);
             Task.Run(async () => { await LoadVideos(); });
 
-            //var picker = (Picker)sender;
-            //SelectedRegion = picker.SelectedItem as Region;
         }
 
         private void SwipeGestureRecognizer_OnSwiped(object sender, SwipedEventArgs e)
