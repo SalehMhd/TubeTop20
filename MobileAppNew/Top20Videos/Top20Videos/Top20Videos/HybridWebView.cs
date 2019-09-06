@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
+using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace Top20Videos
@@ -18,17 +20,17 @@ namespace Top20Videos
 			set { SetValue (UriProperty, value); }
 		}
 
-		public void RegisterAction (Action<string> callback)
-		{
-			action = callback;
-		}
-
 		public void Cleanup ()
 		{
 			action = null;
 		}
 
-		public void InvokeAction (string data)
+        public delegate void WebViewErrorHandler(object sender, EventArgs e);
+
+        public event WebViewErrorHandler OnWebViewError;
+
+
+        public void InvokeAction (string data)
 		{
 			if (action == null || data == null) {
 				return;

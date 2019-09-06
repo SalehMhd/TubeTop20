@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading.Tasks;
+using CarouselView.FormsPlugin.Abstractions;
 using Xamarin.Forms;
 
 namespace Top20Videos
@@ -36,7 +37,10 @@ namespace Top20Videos
             RegionsList = new ObservableCollection<Region>();
             RegionsPicker.ItemsSource = RegionsList;
             BindingContext = _vm = new MainPageViewModel();
-            hybridWebView.RegisterAction(data => DisplayAlert("Alert", "Hello " + data, "OK"));
+            //webView.RegisterAction(data => DisplayAlert("Alert", "Hello " + data, "OK"));
+            //webView.IsVisible = false;
+
+
             //VideosListView.ItemsSource = VideoList;
             //VideosListView1.ItemsSource = VideoList;
 
@@ -61,12 +65,22 @@ namespace Top20Videos
 
                     SelectedRegion = RegionsList[0];
                     await LoadVideos();
+                    PrepareCategoriesWebViews();
                 }
                 else
                 {
 
                 }
             });
+        }
+
+        private void PrepareCategoriesWebViews()
+        {
+            _vm.CategoriesVideoList[0].RegisterAction = data => DisplayAlert("Alert", "Hello " + data, "OK");
+            _vm.CategoriesVideoList[1].RegisterAction = data => DisplayAlert("Alert", "Hello " + data, "OK");
+            _vm.CategoriesVideoList[2].RegisterAction = data => DisplayAlert("Alert", "Hello " + data, "OK");
+            _vm.CategoriesVideoList[3].RegisterAction = data => DisplayAlert("Alert", "Hello " + data, "OK");
+            _vm.CategoriesVideoList[4].RegisterAction = data => DisplayAlert("Alert", "Hello " + data, "OK");
         }
 
         private async Task LoadVideos()
@@ -106,18 +120,23 @@ namespace Top20Videos
                         switch (video.CategoryId)
                         {
                             case ApplicationConstant.AllCategryId:
+                                video.BindingCategoryIndex = 0;
                                 tempCategoriesVideoList[0].InnerVideoList.Add(video);
                                 break;
                             case ApplicationConstant.MusicCategryId:
+                                video.BindingCategoryIndex = 1;
                                 tempCategoriesVideoList[1].InnerVideoList.Add(video);
                                 break;
                             case ApplicationConstant.ComedyCategryId:
+                                video.BindingCategoryIndex = 2;
                                 tempCategoriesVideoList[2].InnerVideoList.Add(video);
                                 break;
                             case ApplicationConstant.SportsCategryId:
+                                video.BindingCategoryIndex = 3;
                                 tempCategoriesVideoList[3].InnerVideoList.Add(video);
                                 break;
                             case ApplicationConstant.GamingCategryId:
+                                video.BindingCategoryIndex = 4;
                                 tempCategoriesVideoList[4].InnerVideoList.Add(video);
                                 break;
                         }
@@ -172,6 +191,12 @@ namespace Top20Videos
         void Handle_PositionSelected(object sender, CarouselView.FormsPlugin.Abstractions.PositionSelectedEventArgs e)
         {
             Console.WriteLine("Position " + e.NewValue + " selected.");
+            //webView.IsVisible = false;
+            _vm.CategoriesVideoList[0].IsVisible = false;
+            _vm.CategoriesVideoList[1].IsVisible = false;
+            _vm.CategoriesVideoList[2].IsVisible = false;
+            _vm.CategoriesVideoList[3].IsVisible = false;
+            _vm.CategoriesVideoList[4].IsVisible = false;
         }
 
         void Handle_Scrolled(object sender, CarouselView.FormsPlugin.Abstractions.ScrolledEventArgs e)
@@ -212,7 +237,17 @@ namespace Top20Videos
 
         private void ListView_OnItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            MessagingCenter.Send<MainPage, string>(this, "Hi", (e.SelectedItem as Video).YouTubeId); 
+            var video = e.SelectedItem as Video;
+            MessagingCenter.Send<MainPage, string>(this, "Hi", video.YouTubeId);
+            _vm.CategoriesVideoList[video.BindingCategoryIndex].IsVisible = true;
+        }
+
+        private void Carousel_OnChildAdded(object sender, ElementEventArgs e)
+        {
+            var ele = sender as Element;
+            var v = sender as View;
+            var g = e.Element;
+            var j = "asd";
         }
     }
 }

@@ -29,5 +29,7 @@ namespace Top20Videos
         [DataMember] public string Channel { get; set; }
         [DataMember] public string Description { get; set; }
         [DataMember] public string RelevanceLanguage { get; set; }
+
+        public int BindingCategoryIndex { get; set; }
     }
 }

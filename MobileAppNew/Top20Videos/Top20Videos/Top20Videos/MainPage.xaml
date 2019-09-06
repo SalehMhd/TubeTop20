@@ -175,46 +175,58 @@
                                     Scrolled="Handle_Scrolled"
                                     VerticalOptions="FillAndExpand"
                                     HorizontalOptions="FillAndExpand"
-                                    ItemsSource="{Binding CategoriesVideoList}">
+                                    ItemsSource="{Binding CategoriesVideoList}"
+                                    >
                         <cv:CarouselViewControl.ItemTemplate>
                             <DataTemplate>
-                        <ListView BackgroundColor="Green"
+                        <StackLayout Orientation="Vertical">
+                            <local:HybridWebView
+                                x:Name="webView"
+                                Uri="youtube.html"
+                                HorizontalOptions="Start"
+                                VerticalOptions="Start" 
+                                RegisterAction="{Binding RegisterAction, Mode=TwoWay}" 
+                                HeightRequest="300"
+                                WidthRequest="300"/> <!--"{Binding IsVisible}" />-->
+
+                            <ListView BackgroundColor="Green"
                               VerticalOptions="FillAndExpand"
                               HorizontalOptions="FillAndExpand"
                               ItemsSource="{Binding InnerVideoList}"
                               ItemSelected="ListView_OnItemSelected">
-                            <ListView.RowHeight>
-                                <OnPlatform x:TypeArguments="x:Int32" iOS="75" Android="82" />
-                            </ListView.RowHeight>
+                                <ListView.RowHeight>
+                                    <OnPlatform x:TypeArguments="x:Int32" iOS="75" Android="82" />
+                                </ListView.RowHeight>
 
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <ViewCell>
-                                        <ViewCell.View>
-                                            <Grid>
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="2*"></RowDefinition>
-                                                </Grid.RowDefinitions>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="*"/>
-                                                    <ColumnDefinition Width="2*"/>
-                                                </Grid.ColumnDefinitions>
-                                                <StackLayout Grid.Column="0" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
-                                                    <Image Source="{Binding Thumbnail}" Aspect="AspectFill" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand"/>
-                                                    <Label Text="{Binding Duration}" TextColor="#EFEEEE" FontSize="10" FontFamily="Helvetica-Condensed-Thin" />
-                                                </StackLayout>
-                                                <StackLayout Grid.Column="1"  HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand">
-                                                    <Label Text="{Binding Title}" TextColor="#FDFEFE" FontSize="13.5" LineBreakMode="WordWrap" FontFamily="Helvetica-Condensed-Thin" />
-                                                    <Label Text="{Binding Channel}" HorizontalOptions="Start" TextColor="#B2B2B2" FontSize="12.5"  FontFamily="Helvetica-Condensed-Thin" />
-                                                    <Label Text="{Binding PublishAgo}" HorizontalOptions="StartAndExpand" TextColor="#B2B2B2" FontSize="12.5" FontFamily="Helvetica-Condensed-Thin"  />
-                                                </StackLayout>
-                                            </Grid>
-                                        </ViewCell.View>
-                                    </ViewCell>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                    </DataTemplate>
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <ViewCell>
+                                            <ViewCell.View>
+                                                <Grid>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="2*"></RowDefinition>
+                                                    </Grid.RowDefinitions>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="2*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <StackLayout Grid.Column="0" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                                                        <Image Source="{Binding Thumbnail}" Aspect="AspectFill" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand"/>
+                                                        <Label Text="{Binding Duration}" TextColor="#EFEEEE" FontSize="10" FontFamily="Helvetica-Condensed-Thin" />
+                                                    </StackLayout>
+                                                    <StackLayout Grid.Column="1"  HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand">
+                                                        <Label Text="{Binding Title}" TextColor="#FDFEFE" FontSize="13.5" LineBreakMode="WordWrap" FontFamily="Helvetica-Condensed-Thin" />
+                                                        <Label Text="{Binding Channel}" HorizontalOptions="Start" TextColor="#B2B2B2" FontSize="12.5"  FontFamily="Helvetica-Condensed-Thin" />
+                                                        <Label Text="{Binding PublishAgo}" HorizontalOptions="StartAndExpand" TextColor="#B2B2B2" FontSize="12.5" FontFamily="Helvetica-Condensed-Thin"  />
+                                                    </StackLayout>
+                                                </Grid>
+                                            </ViewCell.View>
+                                        </ViewCell>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </StackLayout>
+                            </DataTemplate>
                         </cv:CarouselViewControl.ItemTemplate>
             </cv:CarouselViewControl>
                 
@@ -264,11 +276,6 @@
             <!--<WebView x:Name="viewPlayer"
                      HorizontalOptions="FillAndExpand"
                      VerticalOptions="Start"></WebView>-->
-            <local:HybridWebView 
-                x:Name="hybridWebView" 
-                Uri="youtube.html" 
-                HorizontalOptions="FillAndExpand" 
-                VerticalOptions="FillAndExpand" />
         </StackLayout>
 
         <StackLayout Grid.Row="3">
