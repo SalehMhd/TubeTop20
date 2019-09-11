@@ -76,11 +76,11 @@ namespace Top20Videos
 
         private void PrepareCategoriesWebViews()
         {
-            _vm.CategoriesVideoList[0].RegisterAction = data => DisplayAlert("Alert", "Hello " + data, "OK");
-            _vm.CategoriesVideoList[1].RegisterAction = data => DisplayAlert("Alert", "Hello " + data, "OK");
-            _vm.CategoriesVideoList[2].RegisterAction = data => DisplayAlert("Alert", "Hello " + data, "OK");
-            _vm.CategoriesVideoList[3].RegisterAction = data => DisplayAlert("Alert", "Hello " + data, "OK");
-            _vm.CategoriesVideoList[4].RegisterAction = data => DisplayAlert("Alert", "Hello " + data, "OK");
+            _vm.CategoriesVideoList[0].IsVisible = false;
+            _vm.CategoriesVideoList[1].IsVisible = false;
+            _vm.CategoriesVideoList[2].IsVisible = false;
+            _vm.CategoriesVideoList[3].IsVisible = false;
+            _vm.CategoriesVideoList[4].IsVisible = false;
         }
 
         private async Task LoadVideos()
@@ -248,6 +248,11 @@ namespace Top20Videos
             var v = sender as View;
             var g = e.Element;
             var j = "asd";
+        }
+
+        private void WebView_OnErrorOccured(object sender, HybridWebViewErrorEventArgs e)
+        {
+            DisplayAlert("Alert", "Hello " + e.data, "OK");
         }
     }
 }

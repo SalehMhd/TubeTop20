@@ -6,8 +6,8 @@ using Xamarin.Forms;
 namespace Top20Videos
 {
 	public class HybridWebView : View
-	{
-		Action<string> action;
+    {
+        public event EventHandler<HybridWebViewErrorEventArgs> ErrorOccured;
 
 		public static readonly BindableProperty UriProperty = BindableProperty.Create (
 			propertyName: "Uri",
@@ -20,22 +20,25 @@ namespace Top20Videos
 			set { SetValue (UriProperty, value); }
 		}
 
-		public void Cleanup ()
+		public void InvokeAction (string data)
 		{
-			action = null;
+			if (ErrorOccured != null)
+            {
+                Console.WriteLine("WebView Error Occured");
+                Console.WriteLine(data);
+                ErrorOccured.Invoke(this, new HybridWebViewErrorEventArgs(){ data = data });
+            }
+            
 		}
 
-        public delegate void WebViewErrorHandler(object sender, EventArgs e);
+        public void Cleanup()
+        {
+            ErrorOccured = null;
+        }
+    }
 
-        public event WebViewErrorHandler OnWebViewError;
-
-
-        public void InvokeAction (string data)
-		{
-			if (action == null || data == null) {
-				return;
-			}
-			action.Invoke (data);
-		}
-	}
+    public class HybridWebViewErrorEventArgs : EventArgs
+    {
+        public string data { get; set; }
+    }
 }

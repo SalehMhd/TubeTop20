@@ -21,20 +21,6 @@ namespace Top20Videos
 
         public ObservableCollection<Video> InnerVideoList { get; set; }
 
-
-        public Action<string> _RegisterAction;
-
-        public Action<string> RegisterAction
-        {
-            set
-            {
-                _RegisterAction = value;
-                OnPropertyChanged("RegisterAction");
-            }
-            get => _RegisterAction;
-        }
-
-
         public bool _IsVisible;
 
         public bool IsVisible

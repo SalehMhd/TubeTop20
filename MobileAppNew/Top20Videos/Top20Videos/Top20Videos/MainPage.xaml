@@ -183,11 +183,12 @@
                             <local:HybridWebView
                                 x:Name="webView"
                                 Uri="youtube.html"
-                                HorizontalOptions="Start"
+                                HorizontalOptions="StartAndExpand"
                                 VerticalOptions="Start" 
-                                RegisterAction="{Binding RegisterAction, Mode=TwoWay}" 
+                                ErrorOccured="WebView_OnErrorOccured"
+                                IsVisible= "{Binding IsVisible}" 
                                 HeightRequest="300"
-                                WidthRequest="300"/> <!--"{Binding IsVisible}" />-->
+                                WidthRequest="300"/> 
 
                             <ListView BackgroundColor="Green"
                               VerticalOptions="FillAndExpand"
