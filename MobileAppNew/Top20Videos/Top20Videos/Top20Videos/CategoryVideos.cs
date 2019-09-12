@@ -33,7 +33,16 @@ namespace Top20Videos
             get => _IsVisible;
         }
 
-        
+        public int _VMPlayState;
+
+        public int VMPlayState {
+            set
+            {
+                _VMPlayState = value;
+                OnPropertyChanged("VMPlayState");
+            }
+            get => _VMPlayState;
+        }
 
     }
 }

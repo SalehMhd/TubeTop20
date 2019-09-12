@@ -186,7 +186,8 @@
                                 HorizontalOptions="StartAndExpand"
                                 VerticalOptions="Start" 
                                 ErrorOccured="WebView_OnErrorOccured"
-                                IsVisible= "{Binding IsVisible}" 
+                                IsVisible= "{Binding IsVisible}"
+                                PlayState="{Binding VMPlayState}"
                                 HeightRequest="300"
                                 WidthRequest="300"/> 
 

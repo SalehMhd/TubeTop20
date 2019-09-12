@@ -14,11 +14,34 @@ namespace Top20Videos
 			returnType: typeof(string),
 			declaringType: typeof(HybridWebView),
 			defaultValue: default(string));
-		
-		public string Uri {
-			get { return (string)GetValue (UriProperty); }
-			set { SetValue (UriProperty, value); }
-		}
+
+        public string Uri
+        {
+            get { return (string)GetValue(UriProperty); }
+            set { SetValue(UriProperty, value); }
+        }
+
+        public static readonly BindableProperty PlayStateProperty = BindableProperty.Create(nameof(PlayState),
+            returnType: typeof(int),
+            declaringType: typeof(HybridWebView),
+            defaultValue: default(int),
+            defaultBindingMode: BindingMode.TwoWay,
+            propertyChanged: OnPlayStatePropertyChanged);
+
+        protected static void OnPlayStatePropertyChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            ((HybridWebView)bindable).PlayState = int.Parse(newValue.ToString());
+        }
+
+        public int PlayState
+        {
+            set
+            {
+                OnPropertyChanged("PlayState");
+                SetValue(PlayStateProperty, value);
+            }
+            get { return (int) GetValue(PlayStateProperty); }
+        }
 
 		public void InvokeAction (string data)
 		{

@@ -238,7 +238,8 @@ namespace Top20Videos
         private void ListView_OnItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             var video = e.SelectedItem as Video;
-            MessagingCenter.Send<MainPage, string>(this, "Hi", video.YouTubeId);
+            //MessagingCenter.Send<MainPage, string>(this, "Hi", video.YouTubeId);
+            _vm.CategoriesVideoList[video.BindingCategoryIndex].VMPlayState = 1;
             _vm.CategoriesVideoList[video.BindingCategoryIndex].IsVisible = true;
         }
 

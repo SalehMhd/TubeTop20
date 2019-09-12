@@ -4,6 +4,7 @@ using Xamarin.Forms.Platform.Android;
 using Android.Content;
 using Java.IO;
 using System;
+using System.ComponentModel;
 using Android.Webkit;
 using Top20Videos;
 using Top20Videos.Droid;
@@ -28,6 +29,17 @@ namespace Top20Videos.Droid
         public HybridWebViewRenderer(Context context) : base(context)
         {
             _context = context;
+        }
+
+        protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            base.OnElementPropertyChanged(sender, e);
+
+            if (e.PropertyName == "PlayState")
+            {
+                var g = Element.PlayState;
+                var j = g;
+            }
         }
 
         protected override void OnElementChanged(ElementChangedEventArgs<HybridWebView> e)
