@@ -29,6 +29,8 @@ namespace Top20Videos
             get => _CategoriesVideoList;
         }
 
+        public int SelectedCategoryIndex { get; set; }
+
         public MainPageViewModel()
         {
             _CategoriesVideoList = new ObservableCollection<CategoryVideos>

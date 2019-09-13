@@ -44,5 +44,16 @@ namespace Top20Videos
             get => _VMPlayState;
         }
 
+        public string _CurrentVideoYouTubeId;
+
+        public string CurrentVideoYouTubeId
+        {
+            set
+            {
+                _CurrentVideoYouTubeId = value;
+                OnPropertyChanged("CurrentVideoYouTubeId");
+            }
+            get => _CurrentVideoYouTubeId;
+        }
     }
 }

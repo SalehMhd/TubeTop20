@@ -117,29 +117,31 @@ namespace Top20Videos
 
                     foreach (var video in tempVideoList)
                     {
+                        int bindingCategoryIndex = 0;
                         switch (video.CategoryId)
                         {
                             case ApplicationConstant.AllCategryId:
-                                video.BindingCategoryIndex = 0;
-                                tempCategoriesVideoList[0].InnerVideoList.Add(video);
+                                bindingCategoryIndex = 0;
                                 break;
                             case ApplicationConstant.MusicCategryId:
-                                video.BindingCategoryIndex = 1;
-                                tempCategoriesVideoList[1].InnerVideoList.Add(video);
+                                bindingCategoryIndex = 1;
                                 break;
                             case ApplicationConstant.ComedyCategryId:
-                                video.BindingCategoryIndex = 2;
-                                tempCategoriesVideoList[2].InnerVideoList.Add(video);
+                                bindingCategoryIndex = 2;
                                 break;
                             case ApplicationConstant.SportsCategryId:
-                                video.BindingCategoryIndex = 3;
-                                tempCategoriesVideoList[3].InnerVideoList.Add(video);
+                                bindingCategoryIndex = 3;
                                 break;
                             case ApplicationConstant.GamingCategryId:
-                                video.BindingCategoryIndex = 4;
-                                tempCategoriesVideoList[4].InnerVideoList.Add(video);
+                                bindingCategoryIndex = 4;
                                 break;
+                            default:
+                                continue;
                         }
+
+                        video.BindingCategoryIndex = bindingCategoryIndex;
+                        video.VideoListIndex = tempCategoriesVideoList[bindingCategoryIndex].InnerVideoList.Count;
+                        tempCategoriesVideoList[bindingCategoryIndex].InnerVideoList.Add(video);
 
                         //VideoList.Add(video);
                     }
@@ -192,11 +194,11 @@ namespace Top20Videos
         {
             Console.WriteLine("Position " + e.NewValue + " selected.");
             //webView.IsVisible = false;
-            _vm.CategoriesVideoList[0].IsVisible = false;
-            _vm.CategoriesVideoList[1].IsVisible = false;
-            _vm.CategoriesVideoList[2].IsVisible = false;
-            _vm.CategoriesVideoList[3].IsVisible = false;
-            _vm.CategoriesVideoList[4].IsVisible = false;
+            _vm.CategoriesVideoList[0].IsVisible = true;
+            _vm.CategoriesVideoList[1].IsVisible = true;
+            _vm.CategoriesVideoList[2].IsVisible = true;
+            _vm.CategoriesVideoList[3].IsVisible = true;
+            _vm.CategoriesVideoList[4].IsVisible = true;
         }
 
         void Handle_Scrolled(object sender, CarouselView.FormsPlugin.Abstractions.ScrolledEventArgs e)
@@ -238,9 +240,9 @@ namespace Top20Videos
         private void ListView_OnItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             var video = e.SelectedItem as Video;
-            //MessagingCenter.Send<MainPage, string>(this, "Hi", video.YouTubeId);
             _vm.CategoriesVideoList[video.BindingCategoryIndex].VMPlayState = 1;
             _vm.CategoriesVideoList[video.BindingCategoryIndex].IsVisible = true;
+            _vm.CategoriesVideoList[video.BindingCategoryIndex].CurrentVideoYouTubeId = video.YouTubeId;
         }
 
         private void Carousel_OnChildAdded(object sender, ElementEventArgs e)
@@ -254,6 +256,40 @@ namespace Top20Videos
         private void WebView_OnErrorOccured(object sender, HybridWebViewErrorEventArgs e)
         {
             DisplayAlert("Alert", "Hello " + e.data, "OK");
+        }
+
+        private void Previous_OnClicked(object sender, EventArgs e)
+        {
+            if(!_vm.CategoriesVideoList[_vm.SelectedCategoryIndex].IsVisible)
+                return;
+
+            var categoryVids = _vm.CategoriesVideoList[_vm.SelectedCategoryIndex].InnerVideoList;
+            var currentYouTubeId = _vm.CategoriesVideoList[_vm.SelectedCategoryIndex].CurrentVideoYouTubeId;
+
+            var currentVid = categoryVids.FirstOrDefault(v => v.YouTubeId == currentYouTubeId);
+
+            if(currentVid.VideoListIndex > 0)
+            {
+                var prevVideo = categoryVids[currentVid.VideoListIndex - 1];
+                _vm.CategoriesVideoList[currentVid.BindingCategoryIndex].CurrentVideoYouTubeId = prevVideo.YouTubeId;
+            }
+        }
+
+        private void Next_OnClicked(object sender, EventArgs e)
+        {
+            if (!_vm.CategoriesVideoList[_vm.SelectedCategoryIndex].IsVisible)
+                return;
+
+            var categoryVids = _vm.CategoriesVideoList[_vm.SelectedCategoryIndex].InnerVideoList;
+            var currentYouTubeId = _vm.CategoriesVideoList[_vm.SelectedCategoryIndex].CurrentVideoYouTubeId;
+
+            var currentVid = categoryVids.FirstOrDefault(v => v.YouTubeId == currentYouTubeId);
+
+            if (currentVid.VideoListIndex < categoryVids.Count-1)
+            {
+                var nextVideo = categoryVids[currentVid.VideoListIndex + 1];
+                _vm.CategoriesVideoList[currentVid.BindingCategoryIndex].CurrentVideoYouTubeId = nextVideo.YouTubeId;
+            }
         }
     }
 }

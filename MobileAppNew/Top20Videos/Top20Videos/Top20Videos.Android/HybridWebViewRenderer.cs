@@ -8,6 +8,7 @@ using System.ComponentModel;
 using Android.Webkit;
 using Top20Videos;
 using Top20Videos.Droid;
+using WebView = Android.Webkit.WebView;
 
 [assembly: ExportRenderer(typeof(HybridWebView), typeof(HybridWebViewRenderer))]
 namespace Top20Videos.Droid
@@ -39,6 +40,14 @@ namespace Top20Videos.Droid
             {
                 var g = Element.PlayState;
                 var j = g;
+                return;
+            }
+
+            if (e.PropertyName == "YouTubeId")
+            {
+                var webView = this.Control;
+                webView.EvaluateJavascript(string.Format("loadPlayerVideoById(\"{0}\")", Element.YouTubeId),
+                    new JavascriptResult());
             }
         }
 

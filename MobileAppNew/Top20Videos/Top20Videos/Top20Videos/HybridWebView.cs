@@ -33,6 +33,18 @@ namespace Top20Videos
             ((HybridWebView)bindable).PlayState = int.Parse(newValue.ToString());
         }
 
+        public static readonly BindableProperty YouTubeIdProperty = BindableProperty.Create(nameof(YouTubeId),
+            returnType: typeof(string),
+            declaringType: typeof(HybridWebView),
+            defaultValue: default(string),
+            defaultBindingMode: BindingMode.TwoWay,
+            propertyChanged: OnYouTubeIdPropertyChanged);
+
+        protected static void OnYouTubeIdPropertyChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            ((HybridWebView)bindable).YouTubeId = newValue.ToString();
+        }
+
         public int PlayState
         {
             set
@@ -43,7 +55,17 @@ namespace Top20Videos
             get { return (int) GetValue(PlayStateProperty); }
         }
 
-		public void InvokeAction (string data)
+        public string YouTubeId
+        {
+            set
+            {
+                OnPropertyChanged("YouTubeId");
+                SetValue(YouTubeIdProperty, value);
+            }
+            get { return GetValue(YouTubeIdProperty).ToString(); }
+        }
+
+        public void InvokeAction (string data)
 		{
 			if (ErrorOccured != null)
             {

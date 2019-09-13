@@ -31,5 +31,6 @@ namespace Top20Videos
         [DataMember] public string RelevanceLanguage { get; set; }
 
         public int BindingCategoryIndex { get; set; }
+        public int VideoListIndex { get; set; }
     }
 }

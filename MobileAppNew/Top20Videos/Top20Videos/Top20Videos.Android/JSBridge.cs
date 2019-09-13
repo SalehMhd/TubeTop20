@@ -21,8 +21,11 @@ namespace Top20Videos.Droid
 
 			if (hybridWebViewRenderer != null && hybridWebViewRenderer.TryGetTarget (out hybridRenderer)) 
             {
-				hybridRenderer.Element.InvokeAction (data);
-			}
+                if(hybridRenderer.Element != null)
+                { 
+                    hybridRenderer.Element.InvokeAction (data);
+                }
+            }
 		}
 	}
 }

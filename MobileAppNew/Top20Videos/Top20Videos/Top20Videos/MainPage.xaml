@@ -176,6 +176,7 @@
                                     VerticalOptions="FillAndExpand"
                                     HorizontalOptions="FillAndExpand"
                                     ItemsSource="{Binding CategoriesVideoList}"
+                                    Position="{Binding SelectedCategoryIndex}"
                                     >
                         <cv:CarouselViewControl.ItemTemplate>
                             <DataTemplate>
@@ -188,6 +189,7 @@
                                 ErrorOccured="WebView_OnErrorOccured"
                                 IsVisible= "{Binding IsVisible}"
                                 PlayState="{Binding VMPlayState}"
+                                YouTubeId="{Binding CurrentVideoYouTubeId}"
                                 HeightRequest="300"
                                 WidthRequest="300"/> 
 
@@ -289,17 +291,28 @@
                     <ColumnDefinition Width="2*" />
                     <ColumnDefinition Width="2*" />
                     <ColumnDefinition Width="2*" />
+
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <Image Grid.Column="0" Source="previous_disable.png"/>
+                <Image Grid.Column="0" Source="previous.png">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Previous_OnClicked"></TapGestureRecognizer>
+                    </Image.GestureRecognizers>
+                </Image>
+
                 <Image Grid.Column="1" Source="play_bottom.png">
                     <Image.GestureRecognizers>
                         <TapGestureRecognizer Tapped="Play_OnClicked"></TapGestureRecognizer>
                     </Image.GestureRecognizers>
                 </Image>
 
-                <Image Grid.Column="2" Source="previous_disable.png"/>
+                <Image Grid.Column="2" Source="next.png">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Next_OnClicked"></TapGestureRecognizer>
+                    </Image.GestureRecognizers>
+                </Image>
+                
                 <Image Grid.Column="3" Source="previous_disable.png"/>
                 <Image Grid.Column="4" Source="previous_disable.png"/>
                 <!--<Image Grid.Column="5" Source="ytplay.png"/>-->
@@ -307,7 +320,7 @@
                         Grid.Column="5"
                         ItemDisplayBinding="{Binding Name}"
                         SelectedItem="SelectedRegion"
-                        SelectedIndexChanged="RegionPicker_OnSelectedIndexChanged"/>
+                        SelectedIndexChanged="RegionPicker_OnSelectedIndexChanged" />
             </Grid>
         </StackLayout>
 
